@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="../../Organization/knxprod-support/knx_project_14/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" xmlns="http://knx.org/xml/project/14" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
+	<op:config name="%WCL_NumChannelsDefault%" value="1" />
+	<ManufacturerData>
+		<Manufacturer>
+			<ApplicationPrograms>
+				<ApplicationProgram>
+					<Static>
+						<ParameterTypes>
+							<ParameterType Id="%AID%_PT-WCLNumChannels" Name="WCLNumChannels">
+								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="%N%" />
+							</ParameterType>
+							<!-- ICS-URL bis 80 Zeichen -->
+							<ParameterType Id="%AID%_PT-WCLIcsUrl" Name="WCLIcsUrl">
+								<TypeText SizeInBit="640" Pattern="^$|^https?://.+" />
+								<!-- 80 characters -->
+							</ParameterType>
+							<!-- Suchbegriff pro Fraktion, bis 20 Zeichen -->
+							<ParameterType Id="%AID%_PT-WCLFractionKeyword" Name="WCLFractionKeyword">
+								<TypeText SizeInBit="160" />
+								<!-- 20 characters -->
+							</ParameterType>
+						</ParameterTypes>
+						<GroupAddressTable />
+						<AssociationTable />
+						<ComObjectTable />
+					</Static>
+				</ApplicationProgram>
+			</ApplicationPrograms>
+		</Manufacturer>
+	</ManufacturerData>
+</KNX>

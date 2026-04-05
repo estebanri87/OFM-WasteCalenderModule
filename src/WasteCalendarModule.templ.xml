@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="../../Organization/knxprod-support/knx_project_14/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<KNX xmlns:op="http://github.com/OpenKNX/OpenKNXproducer"
+  xmlns="http://knx.org/xml/project/14" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
+  <ManufacturerData>
+    <Manufacturer>
+      <ApplicationPrograms>
+        <ApplicationProgram>
+          <Static>
+            <Parameters>
+              <!-- Kanal-Bezeichnung -->
+              <Parameter Id="%AID%_P-%TT%%CC%000" Name="Channel%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />
+
+              <!-- ICS-URL (Byte 0-79, 80 Zeichen) -->
+              <Union SizeInBit="640">
+                <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%001" Name="CH%C%IcsUrl" ParameterType="%AID%_PT-WCLIcsUrl" Offset="0" BitOffset="0" Text="ICS-URL" Value="" />
+              </Union>
+
+              <!-- Fraktion 1 Suchbegriff (Byte 80-99, 20 Zeichen) -->
+              <Union SizeInBit="160">
+                <Memory CodeSegment="%MID%" Offset="80" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%010" Name="CH%C%Fr1Keyword" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Suchbegriff Fraktion 1" Value="" />
+              </Union>
+
+              <!-- Fraktion 2 Suchbegriff (Byte 100-119, 20 Zeichen) -->
+              <Union SizeInBit="160">
+                <Memory CodeSegment="%MID%" Offset="100" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%011" Name="CH%C%Fr2Keyword" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Suchbegriff Fraktion 2" Value="" />
+              </Union>
+
+              <!-- Fraktion 3 Suchbegriff (Byte 120-139, 20 Zeichen) -->
+              <Union SizeInBit="160">
+                <Memory CodeSegment="%MID%" Offset="120" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%012" Name="CH%C%Fr3Keyword" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Suchbegriff Fraktion 3" Value="" />
+              </Union>
+
+              <!-- Fraktion 4 Suchbegriff (Byte 140-159, 20 Zeichen) -->
+              <Union SizeInBit="160">
+                <Memory CodeSegment="%MID%" Offset="140" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%013" Name="CH%C%Fr4Keyword" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Suchbegriff Fraktion 4" Value="" />
+              </Union>
+            </Parameters>
+            <ParameterRefs>
+              <ParameterRef Id="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"  RefId="%AID%_P-%TT%%CC%000" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" RefId="%AID%_UP-%TT%%CC%001" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" RefId="%AID%_UP-%TT%%CC%010" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" RefId="%AID%_UP-%TT%%CC%011" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201" RefId="%AID%_UP-%TT%%CC%012" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" RefId="%AID%_UP-%TT%%CC%013" />
+            </ParameterRefs>
+            <ComObjectTable>
+              <!-- ===== Fraktion 1 ===== -->
+              <!-- Tage bis Abholung Fraktion 1 (DPT 5.010) -->
+              <ComObject Id="%AID%_O-%TT%%CC%000" Number="%K0%"  Name="CH%C%Fr1DaysUntilPickup" Text="Fraktion 1: Tage bis Abholung" ObjectSize="1 Byte"  DatapointType="DPT-7"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Bezeichnung Fraktion 1 (DPT 16.001, 14-Byte String) -->
+              <ComObject Id="%AID%_O-%TT%%CC%001" Number="%K1%"  Name="CH%C%Fr1Name"            Text="Fraktion 1: Bezeichnung"     ObjectSize="14 Bytes" DatapointType="DPT-16" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Abholung heute Fraktion 1 (DPT 1.001) -->
+              <ComObject Id="%AID%_O-%TT%%CC%002" Number="%K2%"  Name="CH%C%Fr1PickupToday"     Text="Fraktion 1: Abholung heute"   ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- Abholung morgen Fraktion 1 (DPT 1.001) -->
+              <ComObject Id="%AID%_O-%TT%%CC%003" Number="%K3%"  Name="CH%C%Fr1PickupTomorrow"  Text="Fraktion 1: Abholung morgen"  ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+
+              <!-- ===== Fraktion 2 ===== -->
+              <ComObject Id="%AID%_O-%TT%%CC%004" Number="%K4%"  Name="CH%C%Fr2DaysUntilPickup" Text="Fraktion 2: Tage bis Abholung" ObjectSize="1 Byte"  DatapointType="DPT-7"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%005" Number="%K5%"  Name="CH%C%Fr2Name"            Text="Fraktion 2: Bezeichnung"     ObjectSize="14 Bytes" DatapointType="DPT-16" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%006" Number="%K6%"  Name="CH%C%Fr2PickupToday"     Text="Fraktion 2: Abholung heute"   ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%007" Number="%K7%"  Name="CH%C%Fr2PickupTomorrow"  Text="Fraktion 2: Abholung morgen"  ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+
+              <!-- ===== Fraktion 3 ===== -->
+              <ComObject Id="%AID%_O-%TT%%CC%008" Number="%K8%"  Name="CH%C%Fr3DaysUntilPickup" Text="Fraktion 3: Tage bis Abholung" ObjectSize="1 Byte"  DatapointType="DPT-7"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%009" Number="%K9%"  Name="CH%C%Fr3Name"            Text="Fraktion 3: Bezeichnung"     ObjectSize="14 Bytes" DatapointType="DPT-16" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%010" Number="%K10%" Name="CH%C%Fr3PickupToday"     Text="Fraktion 3: Abholung heute"   ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%011" Number="%K11%" Name="CH%C%Fr3PickupTomorrow"  Text="Fraktion 3: Abholung morgen"  ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+
+              <!-- ===== Fraktion 4 ===== -->
+              <ComObject Id="%AID%_O-%TT%%CC%012" Number="%K12%" Name="CH%C%Fr4DaysUntilPickup" Text="Fraktion 4: Tage bis Abholung" ObjectSize="1 Byte"  DatapointType="DPT-7"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%013" Number="%K13%" Name="CH%C%Fr4Name"            Text="Fraktion 4: Bezeichnung"     ObjectSize="14 Bytes" DatapointType="DPT-16" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%014" Number="%K14%" Name="CH%C%Fr4PickupToday"     Text="Fraktion 4: Abholung heute"   ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%015" Number="%K15%" Name="CH%C%Fr4PickupTomorrow"  Text="Fraktion 4: Abholung morgen"  ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+            </ComObjectTable>
+            <ComObjectInstanceRefs>
+              <ComObjectInstanceRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001"  RefId="%AID%_O-%TT%%CC%000" />
+              <ComObjectInstanceRef Id="%AID%_O-%TT%%CC%001_R-%TT%%CC%00101"  RefId="%AID%_O-%TT%%CC%001" />
+              <ComObjectInstanceRef Id="%AID%_O-%TT%%CC%002_R-%TT%%CC%00201"  RefId="%AID%_O-%TT%%CC%002" />
+              <ComObjectInstanceRef Id="%AID%_O-%TT%%CC%003_R-%TT%%CC%00301"  RefId="%AID%_O-%TT%%CC%003" />
+              <ComObjectInstanceRef Id="%AID%_O-%TT%%CC%004_R-%TT%%CC%00401"  RefId="%AID%_O-%TT%%CC%004" />
+              <ComObjectInstanceRef Id="%AID%_O-%TT%%CC%005_R-%TT%%CC%00501"  RefId="%AID%_O-%TT%%CC%005" />
+              <ComObjectInstanceRef Id="%AID%_O-%TT%%CC%006_R-%TT%%CC%00601"  RefId="%AID%_O-%TT%%CC%006" />
+              <ComObjectInstanceRef Id="%AID%_O-%TT%%CC%007_R-%TT%%CC%00701"  RefId="%AID%_O-%TT%%CC%007" />
+              <ComObjectInstanceRef Id="%AID%_O-%TT%%CC%008_R-%TT%%CC%00801"  RefId="%AID%_O-%TT%%CC%008" />
+              <ComObjectInstanceRef Id="%AID%_O-%TT%%CC%009_R-%TT%%CC%00901"  RefId="%AID%_O-%TT%%CC%009" />
+              <ComObjectInstanceRef Id="%AID%_O-%TT%%CC%010_R-%TT%%CC%01001"  RefId="%AID%_O-%TT%%CC%010" />
+              <ComObjectInstanceRef Id="%AID%_O-%TT%%CC%011_R-%TT%%CC%01101"  RefId="%AID%_O-%TT%%CC%011" />
+              <ComObjectInstanceRef Id="%AID%_O-%TT%%CC%012_R-%TT%%CC%01201"  RefId="%AID%_O-%TT%%CC%012" />
+              <ComObjectInstanceRef Id="%AID%_O-%TT%%CC%013_R-%TT%%CC%01301"  RefId="%AID%_O-%TT%%CC%013" />
+              <ComObjectInstanceRef Id="%AID%_O-%TT%%CC%014_R-%TT%%CC%01401"  RefId="%AID%_O-%TT%%CC%014" />
+              <ComObjectInstanceRef Id="%AID%_O-%TT%%CC%015_R-%TT%%CC%01501"  RefId="%AID%_O-%TT%%CC%015" />
+            </ComObjectInstanceRefs>
+          </Static>
+        </ApplicationProgram>
+      </ApplicationPrograms>
+    </Manufacturer>
+  </ManufacturerData>
+</KNX>

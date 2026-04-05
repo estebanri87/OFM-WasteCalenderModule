@@ -1,0 +1,19 @@
+{
+    "name": "OFM-WasteCalendarModule",
+    "version": "0.1.0",
+    "dependencies": {
+        "bblanchon/ArduinoJson": "^7.0.4"
+    },
+    "description": "Waste Collection Calendar via ICS/iCal",
+    "homepage": "https://openknx.de",
+    "authors": {
+        "name": "OpenKNX",
+        "email": "info@openknx.de",
+        "url": "https://openknx.de",
+        "maintainer": true
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/estebanri87/OFM-WasteCalenderModule"
+    }
+}
