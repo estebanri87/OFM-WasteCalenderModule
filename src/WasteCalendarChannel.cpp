@@ -18,7 +18,7 @@ void WasteCalendarChannel::setup()
 
 void WasteCalendarChannel::loop()
 {
-    if (!openknx.time.isTimeSynced())
+    if (time(nullptr) < 1577836800LL)
         return;
 
     uint32_t now = millis();
@@ -204,13 +204,6 @@ void WasteCalendarChannel::evaluateFractions(const WastePickupDate* dates, const
     int todayMonth = tmToday->tm_mon + 1;
     int todayDay   = tmToday->tm_mday;
 
-    // Morgen
-    time_t tomorrow_t = now + 86400;
-    struct tm* tmTomorrow = localtime(&tomorrow_t);
-    int tomorrowYear  = tmTomorrow->tm_year + 1900;
-    int tomorrowMonth = tmTomorrow->tm_mon + 1;
-    int tomorrowDay   = tmTomorrow->tm_mday;
-
     for (int f = 0; f < WCL_NUM_FRACTIONS; f++)
     {
         _fractions[f].daysUntilPickup = 255;
@@ -221,10 +214,10 @@ void WasteCalendarChannel::evaluateFractions(const WastePickupDate* dates, const
         const char* keyword = nullptr;
         switch (f)
         {
-            case 0: keyword = ParamWCL_CHFraction1KeywordStr.c_str(); break;
-            case 1: keyword = ParamWCL_CHFraction2KeywordStr.c_str(); break;
-            case 2: keyword = ParamWCL_CHFraction3KeywordStr.c_str(); break;
-            case 3: keyword = ParamWCL_CHFraction4KeywordStr.c_str(); break;
+            case 0: keyword = ParamWCL_CHFr1KeywordStr.c_str(); break;
+            case 1: keyword = ParamWCL_CHFr2KeywordStr.c_str(); break;
+            case 2: keyword = ParamWCL_CHFr3KeywordStr.c_str(); break;
+            case 3: keyword = ParamWCL_CHFr4KeywordStr.c_str(); break;
         }
 
         if (keyword == nullptr || keyword[0] == '\0')
@@ -285,28 +278,23 @@ void WasteCalendarChannel::evaluateFractions(const WastePickupDate* dates, const
 
 void WasteCalendarChannel::publishKos()
 {
+    // KOs je Fraktion: DaysUntilPickup, Name, PickupToday, PickupTomorrow = 4 KOs
+    static const uint8_t KO_PER_FRACTION = 4;
+
     for (int f = 0; f < WCL_NUM_FRACTIONS; f++)
     {
-        uint8_t koOffset = f * WCL_KoBlockSizeFraction;
+        uint8_t koOffset = f * KO_PER_FRACTION;
 
         // Tage bis Abholung
-        KnxGroupObject* koDays = openknx.getKo(WCL_KoCHFr1DaysUntilPickup + koOffset);
-        if (koDays != nullptr)
-            koDays->value(_fractions[f].daysUntilPickup, DPT_Value_1_Ucount);
+        knx.getGroupObject(WCL_KoCalcNumber(WCL_KoCHFr1DaysUntilPickup + koOffset)).value(_fractions[f].daysUntilPickup, DPT_Value_1_Ucount);
 
         // Bezeichnung
-        KnxGroupObject* koName = openknx.getKo(WCL_KoCHFr1Name + koOffset);
-        if (koName != nullptr)
-            koName->value(_fractions[f].name, DPT_String_ASCII);
+        knx.getGroupObject(WCL_KoCalcNumber(WCL_KoCHFr1Name + koOffset)).value(_fractions[f].name, DPT_String_ASCII);
 
         // Abholung heute
-        KnxGroupObject* koToday = openknx.getKo(WCL_KoCHFr1PickupToday + koOffset);
-        if (koToday != nullptr)
-            koToday->value(_fractions[f].pickupToday, DPT_Switch);
+        knx.getGroupObject(WCL_KoCalcNumber(WCL_KoCHFr1PickupToday + koOffset)).value(_fractions[f].pickupToday, DPT_Switch);
 
         // Abholung morgen
-        KnxGroupObject* koTomorrow = openknx.getKo(WCL_KoCHFr1PickupTomorrow + koOffset);
-        if (koTomorrow != nullptr)
-            koTomorrow->value(_fractions[f].pickupTomorrow, DPT_Switch);
+        knx.getGroupObject(WCL_KoCalcNumber(WCL_KoCHFr1PickupTomorrow + koOffset)).value(_fractions[f].pickupTomorrow, DPT_Switch);
     }
 }
