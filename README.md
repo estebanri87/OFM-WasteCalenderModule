@@ -5,8 +5,8 @@ OpenKNX Modul zur Abfrage von Abfallkalender-Terminen über ICS/iCal-URLs.
 ## Features
 
 - Kalender-Abonnement via konfigurierbarer ICS-URL pro Kanal
-- Bis zu 4 Abfallfraktionen pro Kanal, jede mit konfigurierbarem Suchbegriff
-- Gruppenobjekte pro Fraktion:
+- Bis zu 4 Abfallarten pro Kanal, jede mit konfigurierbarem Suchbegriff
+- Gruppenobjekte pro Abfallart:
   - Tage bis nächste Abholung (DPT 5.010)
   - Bezeichnung (DPT 16.001)
   - Abholung heute (DPT 1.001)
@@ -24,7 +24,7 @@ OpenKNX Modul zur Abfrage von Abfallkalender-Terminen über ICS/iCal-URLs.
 | Parameter | Beschreibung |
 |---|---|
 | ICS-URL | URL zum iCal-Kalender des Anbieters |
-| Suchbegriff Fraktion 1–4 | Schlüsselwort das in SUMMARY des VEVENT enthalten sein muss |
+| Suchbegriff Abfallart 1–4 | Schlüsselwort das in SUMMARY des VEVENT enthalten sein muss |
 
 ## Lizenz
 
