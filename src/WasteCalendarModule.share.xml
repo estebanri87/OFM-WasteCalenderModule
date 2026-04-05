@@ -22,9 +22,6 @@
 								<!-- 20 characters -->
 							</ParameterType>
 						</ParameterTypes>
-						<GroupAddressTable />
-						<AssociationTable />
-						<ComObjectTable />
 					</Static>
 				</ApplicationProgram>
 			</ApplicationPrograms>
