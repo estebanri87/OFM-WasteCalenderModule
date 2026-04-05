@@ -11,10 +11,10 @@
 							<ParameterType Id="%AID%_PT-WCLNumChannels" Name="WCLNumChannels">
 								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="%N%" />
 							</ParameterType>
-							<!-- ICS-URL bis 80 Zeichen -->
-							<ParameterType Id="%AID%_PT-WCLIcsUrl" Name="WCLIcsUrl">
-								<TypeText SizeInBit="640" Pattern="^$|^https?://.+" />
-								<!-- 80 characters -->
+						<!-- ICS-URL bis 160 Zeichen -->
+						<ParameterType Id="%AID%_PT-WCLIcsUrl" Name="WCLIcsUrl">
+							<TypeText SizeInBit="1280" Pattern="^$|^https?://.+" />
+							<!-- 160 characters -->
 							</ParameterType>
 							<!-- Suchbegriff pro Fraktion, bis 20 Zeichen -->
 							<ParameterType Id="%AID%_PT-WCLFractionKeyword" Name="WCLFractionKeyword">

@@ -11,33 +11,33 @@
               <!-- Kanal-Bezeichnung -->
               <Parameter Id="%AID%_P-%TT%%CC%000" Name="Channel%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />
 
-              <!-- ICS-URL (Byte 0-79, 80 Zeichen) -->
-              <Union SizeInBit="640">
+              <!-- ICS-URL (Byte 0-159, 160 Zeichen) -->
+              <Union SizeInBit="1280">
                 <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%001" Name="CH%C%IcsUrl" ParameterType="%AID%_PT-WCLIcsUrl" Offset="0" BitOffset="0" Text="ICS-URL" Value="" />
               </Union>
 
-              <!-- Abfallart 1 Suchbegriff (Byte 80-99, 20 Zeichen) -->
+              <!-- Abfallart 1 Suchbegriff (Byte 160-179, 20 Zeichen) -->
               <Union SizeInBit="160">
-                <Memory CodeSegment="%MID%" Offset="80" BitOffset="0" />
+                <Memory CodeSegment="%MID%" Offset="160" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%010" Name="CH%C%Fr1Keyword" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Suchbegriff Abfallart 1" Value="" />
               </Union>
 
-              <!-- Abfallart 2 Suchbegriff (Byte 100-119, 20 Zeichen) -->
+              <!-- Abfallart 2 Suchbegriff (Byte 180-199, 20 Zeichen) -->
               <Union SizeInBit="160">
-                <Memory CodeSegment="%MID%" Offset="100" BitOffset="0" />
+                <Memory CodeSegment="%MID%" Offset="180" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%011" Name="CH%C%Fr2Keyword" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Suchbegriff Abfallart 2" Value="" />
               </Union>
 
-              <!-- Abfallart 3 Suchbegriff (Byte 120-139, 20 Zeichen) -->
+              <!-- Abfallart 3 Suchbegriff (Byte 200-219, 20 Zeichen) -->
               <Union SizeInBit="160">
-                <Memory CodeSegment="%MID%" Offset="120" BitOffset="0" />
+                <Memory CodeSegment="%MID%" Offset="200" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%012" Name="CH%C%Fr3Keyword" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Suchbegriff Abfallart 3" Value="" />
               </Union>
 
-              <!-- Abfallart 4 Suchbegriff (Byte 140-159, 20 Zeichen) -->
+              <!-- Abfallart 4 Suchbegriff (Byte 220-239, 20 Zeichen) -->
               <Union SizeInBit="160">
-                <Memory CodeSegment="%MID%" Offset="140" BitOffset="0" />
+                <Memory CodeSegment="%MID%" Offset="220" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%013" Name="CH%C%Fr4Keyword" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Suchbegriff Abfallart 4" Value="" />
               </Union>
             </Parameters>
