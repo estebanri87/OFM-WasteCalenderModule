@@ -17,28 +17,28 @@
                 <Parameter Id="%AID%_UP-%TT%%CC%001" Name="CH%C%IcsUrl" ParameterType="%AID%_PT-WCLIcsUrl" Offset="0" BitOffset="0" Text="ICS-URL" Value="" />
               </Union>
 
-              <!-- Fraktion 1 Suchbegriff (Byte 80-99, 20 Zeichen) -->
+              <!-- Abfallart 1 Suchbegriff (Byte 80-99, 20 Zeichen) -->
               <Union SizeInBit="160">
                 <Memory CodeSegment="%MID%" Offset="80" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%010" Name="CH%C%Fr1Keyword" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Suchbegriff Fraktion 1" Value="" />
+                <Parameter Id="%AID%_UP-%TT%%CC%010" Name="CH%C%Fr1Keyword" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Suchbegriff Abfallart 1" Value="" />
               </Union>
 
-              <!-- Fraktion 2 Suchbegriff (Byte 100-119, 20 Zeichen) -->
+              <!-- Abfallart 2 Suchbegriff (Byte 100-119, 20 Zeichen) -->
               <Union SizeInBit="160">
                 <Memory CodeSegment="%MID%" Offset="100" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%011" Name="CH%C%Fr2Keyword" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Suchbegriff Fraktion 2" Value="" />
+                <Parameter Id="%AID%_UP-%TT%%CC%011" Name="CH%C%Fr2Keyword" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Suchbegriff Abfallart 2" Value="" />
               </Union>
 
-              <!-- Fraktion 3 Suchbegriff (Byte 120-139, 20 Zeichen) -->
+              <!-- Abfallart 3 Suchbegriff (Byte 120-139, 20 Zeichen) -->
               <Union SizeInBit="160">
                 <Memory CodeSegment="%MID%" Offset="120" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%012" Name="CH%C%Fr3Keyword" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Suchbegriff Fraktion 3" Value="" />
+                <Parameter Id="%AID%_UP-%TT%%CC%012" Name="CH%C%Fr3Keyword" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Suchbegriff Abfallart 3" Value="" />
               </Union>
 
-              <!-- Fraktion 4 Suchbegriff (Byte 140-159, 20 Zeichen) -->
+              <!-- Abfallart 4 Suchbegriff (Byte 140-159, 20 Zeichen) -->
               <Union SizeInBit="160">
                 <Memory CodeSegment="%MID%" Offset="140" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%013" Name="CH%C%Fr4Keyword" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Suchbegriff Fraktion 4" Value="" />
+                <Parameter Id="%AID%_UP-%TT%%CC%013" Name="CH%C%Fr4Keyword" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Suchbegriff Abfallart 4" Value="" />
               </Union>
             </Parameters>
             <ParameterRefs>
@@ -50,33 +50,33 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" RefId="%AID%_UP-%TT%%CC%013" />
             </ParameterRefs>
             <ComObjectTable>
-              <!-- ===== Fraktion 1 ===== -->
+              <!-- ===== Abfallart 1 ===== -->
               <!-- Tage bis Abholung Fraktion 1 (DPT 5.010) -->
-              <ComObject Id="%AID%_O-%TT%%CC%000" Number="%K0%"  Name="CH%C%Fr1DaysUntilPickup" Text="Fraktion 1: Tage bis Abholung" ObjectSize="1 Byte"  DatapointType="DPT-7"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%000" Number="%K0%"  Name="CH%C%Fr1DaysUntilPickup" Text="Abfallart 1: Tage bis Abholung" ObjectSize="1 Byte"  DatapointType="DPT-7"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <!-- Bezeichnung Fraktion 1 (DPT 16.001, 14-Byte String) -->
-              <ComObject Id="%AID%_O-%TT%%CC%001" Number="%K1%"  Name="CH%C%Fr1Name"            Text="Fraktion 1: Bezeichnung"     ObjectSize="14 Bytes" DatapointType="DPT-16" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%001" Number="%K1%"  Name="CH%C%Fr1Name"            Text="Abfallart 1: Bezeichnung"     ObjectSize="14 Bytes" DatapointType="DPT-16" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <!-- Abholung heute Fraktion 1 (DPT 1.001) -->
-              <ComObject Id="%AID%_O-%TT%%CC%002" Number="%K2%"  Name="CH%C%Fr1PickupToday"     Text="Fraktion 1: Abholung heute"   ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%002" Number="%K2%"  Name="CH%C%Fr1PickupToday"     Text="Abfallart 1: Abholung heute"   ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <!-- Abholung morgen Fraktion 1 (DPT 1.001) -->
-              <ComObject Id="%AID%_O-%TT%%CC%003" Number="%K3%"  Name="CH%C%Fr1PickupTomorrow"  Text="Fraktion 1: Abholung morgen"  ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%003" Number="%K3%"  Name="CH%C%Fr1PickupTomorrow"  Text="Abfallart 1: Abholung morgen"  ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
-              <!-- ===== Fraktion 2 ===== -->
-              <ComObject Id="%AID%_O-%TT%%CC%004" Number="%K4%"  Name="CH%C%Fr2DaysUntilPickup" Text="Fraktion 2: Tage bis Abholung" ObjectSize="1 Byte"  DatapointType="DPT-7"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
-              <ComObject Id="%AID%_O-%TT%%CC%005" Number="%K5%"  Name="CH%C%Fr2Name"            Text="Fraktion 2: Bezeichnung"     ObjectSize="14 Bytes" DatapointType="DPT-16" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
-              <ComObject Id="%AID%_O-%TT%%CC%006" Number="%K6%"  Name="CH%C%Fr2PickupToday"     Text="Fraktion 2: Abholung heute"   ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
-              <ComObject Id="%AID%_O-%TT%%CC%007" Number="%K7%"  Name="CH%C%Fr2PickupTomorrow"  Text="Fraktion 2: Abholung morgen"  ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- ===== Abfallart 2 ===== -->
+              <ComObject Id="%AID%_O-%TT%%CC%004" Number="%K4%"  Name="CH%C%Fr2DaysUntilPickup" Text="Abfallart 2: Tage bis Abholung" ObjectSize="1 Byte"  DatapointType="DPT-7"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%005" Number="%K5%"  Name="CH%C%Fr2Name"            Text="Abfallart 2: Bezeichnung"     ObjectSize="14 Bytes" DatapointType="DPT-16" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%006" Number="%K6%"  Name="CH%C%Fr2PickupToday"     Text="Abfallart 2: Abholung heute"   ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%007" Number="%K7%"  Name="CH%C%Fr2PickupTomorrow"  Text="Abfallart 2: Abholung morgen"  ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
-              <!-- ===== Fraktion 3 ===== -->
-              <ComObject Id="%AID%_O-%TT%%CC%008" Number="%K8%"  Name="CH%C%Fr3DaysUntilPickup" Text="Fraktion 3: Tage bis Abholung" ObjectSize="1 Byte"  DatapointType="DPT-7"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
-              <ComObject Id="%AID%_O-%TT%%CC%009" Number="%K9%"  Name="CH%C%Fr3Name"            Text="Fraktion 3: Bezeichnung"     ObjectSize="14 Bytes" DatapointType="DPT-16" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
-              <ComObject Id="%AID%_O-%TT%%CC%010" Number="%K10%" Name="CH%C%Fr3PickupToday"     Text="Fraktion 3: Abholung heute"   ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
-              <ComObject Id="%AID%_O-%TT%%CC%011" Number="%K11%" Name="CH%C%Fr3PickupTomorrow"  Text="Fraktion 3: Abholung morgen"  ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- ===== Abfallart 3 ===== -->
+              <ComObject Id="%AID%_O-%TT%%CC%008" Number="%K8%"  Name="CH%C%Fr3DaysUntilPickup" Text="Abfallart 3: Tage bis Abholung" ObjectSize="1 Byte"  DatapointType="DPT-7"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%009" Number="%K9%"  Name="CH%C%Fr3Name"            Text="Abfallart 3: Bezeichnung"     ObjectSize="14 Bytes" DatapointType="DPT-16" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%010" Number="%K10%" Name="CH%C%Fr3PickupToday"     Text="Abfallart 3: Abholung heute"   ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%011" Number="%K11%" Name="CH%C%Fr3PickupTomorrow"  Text="Abfallart 3: Abholung morgen"  ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
-              <!-- ===== Fraktion 4 ===== -->
-              <ComObject Id="%AID%_O-%TT%%CC%012" Number="%K12%" Name="CH%C%Fr4DaysUntilPickup" Text="Fraktion 4: Tage bis Abholung" ObjectSize="1 Byte"  DatapointType="DPT-7"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
-              <ComObject Id="%AID%_O-%TT%%CC%013" Number="%K13%" Name="CH%C%Fr4Name"            Text="Fraktion 4: Bezeichnung"     ObjectSize="14 Bytes" DatapointType="DPT-16" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
-              <ComObject Id="%AID%_O-%TT%%CC%014" Number="%K14%" Name="CH%C%Fr4PickupToday"     Text="Fraktion 4: Abholung heute"   ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
-              <ComObject Id="%AID%_O-%TT%%CC%015" Number="%K15%" Name="CH%C%Fr4PickupTomorrow"  Text="Fraktion 4: Abholung morgen"  ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <!-- ===== Abfallart 4 ===== -->
+              <ComObject Id="%AID%_O-%TT%%CC%012" Number="%K12%" Name="CH%C%Fr4DaysUntilPickup" Text="Abfallart 4: Tage bis Abholung" ObjectSize="1 Byte"  DatapointType="DPT-7"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%013" Number="%K13%" Name="CH%C%Fr4Name"            Text="Abfallart 4: Bezeichnung"     ObjectSize="14 Bytes" DatapointType="DPT-16" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%014" Number="%K14%" Name="CH%C%Fr4PickupToday"     Text="Abfallart 4: Abholung heute"   ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%015" Number="%K15%" Name="CH%C%Fr4PickupTomorrow"  Text="Abfallart 4: Abholung morgen"  ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
             </ComObjectTable>
             <ComObjectInstanceRefs>
               <ComObjectInstanceRef Id="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001"  RefId="%AID%_O-%TT%%CC%000" />
