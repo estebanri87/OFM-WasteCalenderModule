@@ -11,3 +11,9 @@ release/*
 # Test/debug API response files
 *.json
 !library.json
+
+# Abfallplus debug/session files
+cookies.txt
+session.txt
+login.html
+kommune.html
