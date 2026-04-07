@@ -24,6 +24,8 @@ class WCLChannelOwnerModule : public OpenKNX::Module
     uint8_t getNumberOfChannels();
     OpenKNX::Channel* getChannel(uint8_t channelIndex);
 
+    virtual void processInputKo(GroupObject& ko) override;
+
 #ifdef OPENKNX_DUALCORE
     virtual void setup1(bool configured) override;
     virtual void setup1() override;

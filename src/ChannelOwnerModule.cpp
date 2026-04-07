@@ -179,3 +179,12 @@ void WCLChannelOwnerModule::loop1()
     }
 }
 #endif
+
+void WCLChannelOwnerModule::processInputKo(GroupObject& ko)
+{
+    OpenKNX::Module::processInputKo(ko);
+    if (_pChannels != nullptr)
+        for (uint8_t i = 0; i < _numberOfChannels; i++)
+            if (_pChannels[i] != nullptr)
+                _pChannels[i]->processInputKo(ko);
+}
