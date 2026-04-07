@@ -11,48 +11,155 @@
               <!-- Kanal-Bezeichnung -->
               <Parameter Id="%AID%_P-%TT%%CC%000" Name="Channel%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />
 
-              <!-- ICS-URL (Byte 0-159, 160 Zeichen) -->
-              <Union SizeInBit="1280">
+              <!-- Modus (Byte 0, 1 Byte) -->
+              <Union SizeInBit="8">
                 <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%002" Name="CH%C%Mode" ParameterType="%AID%_PT-WCLMode" Offset="0" BitOffset="0" Text="Datenquelle" Value="0" />
+              </Union>
+
+              <!-- ICS-URL (Byte 1-160, 160 Zeichen) -->
+              <Union SizeInBit="1280">
+                <Memory CodeSegment="%MID%" Offset="1" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%001" Name="CH%C%IcsUrl" ParameterType="%AID%_PT-WCLIcsUrl" Offset="0" BitOffset="0" Text="ICS-URL" Value="" />
               </Union>
 
-              <!-- Abfallart 1 Suchbegriff (Byte 160-179, 20 Zeichen) -->
+              <!-- app.abfallplus.de: App-ID (Byte 161-192, 32 Zeichen) -->
+              <Union SizeInBit="256">
+                <Memory CodeSegment="%MID%" Offset="161" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%020" Name="CH%C%AvrKey" ParameterType="%AID%_PT-WCLAvrKey" Offset="0" BitOffset="0" Text="App-ID (z.B. de.ucom.abfallavr)" Value="de.ucom.abfallavr" />
+              </Union>
+
+              <!-- app.abfallplus.de: Stadt/Gemeinde (Byte 193-224, 32 Zeichen) -->
+              <Union SizeInBit="256">
+                <Memory CodeSegment="%MID%" Offset="193" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%021" Name="CH%C%AvrModus" ParameterType="%AID%_PT-WCLAvrKey" Offset="0" BitOffset="0" Text="Stadt/Gemeinde" Value="" />
+              </Union>
+
+              <!-- app.abfallplus.de: Landkreis (Byte 225-256, 32 Zeichen, optional) -->
+              <Union SizeInBit="256">
+                <Memory CodeSegment="%MID%" Offset="225" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%022" Name="CH%C%AvrKommune" ParameterType="%AID%_PT-WCLAvrKey" Offset="0" BitOffset="0" Text="Landkreis (opt.)" Value="" />
+              </Union>
+
+              <!-- app.abfallplus.de: Bezirk (Byte 257-276, 20 Zeichen, optional) -->
               <Union SizeInBit="160">
-                <Memory CodeSegment="%MID%" Offset="160" BitOffset="0" />
+                <Memory CodeSegment="%MID%" Offset="257" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%023" Name="CH%C%AvrStrasse" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Bezirk (opt.)" Value="" />
+              </Union>
+
+              <!-- app.abfallplus.de: Bundesland (Byte 277-296, 20 Zeichen, optional) -->
+              <Union SizeInBit="160">
+                <Memory CodeSegment="%MID%" Offset="277" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%026" Name="CH%C%AvrBundesland" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Bundesland (opt.)" Value="" />
+              </Union>
+
+              <!-- app.abfallplus.de: Hausnummer (Byte 297-306, 10 Zeichen) -->
+              <Union SizeInBit="80">
+                <Memory CodeSegment="%MID%" Offset="297" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%024" Name="CH%C%AvrHnr" ParameterType="%AID%_PT-WCLAvrId" Offset="0" BitOffset="0" Text="Hausnummer" Value="" />
+              </Union>
+
+              <!-- app.abfallplus.de: Straße (Byte 307-346, 40 Zeichen) -->
+              <Union SizeInBit="320">
+                <Memory CodeSegment="%MID%" Offset="307" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%025" Name="CH%C%AvrTypes" ParameterType="%AID%_PT-WCLAvrTypes" Offset="0" BitOffset="0" Text="Straße" Value="" />
+              </Union>
+
+              <!-- müll.io: Straße (Byte 347-386, 40 Zeichen) -->
+              <Union SizeInBit="320">
+                <Memory CodeSegment="%MID%" Offset="347" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%030" Name="CH%C%MuellStreet" ParameterType="%AID%_PT-WCLMuellStreet" Offset="0" BitOffset="0" Text="Straße" Value="" />
+              </Union>
+
+              <!-- müll.io: Hausnummer (Byte 387-396, 10 Zeichen) -->
+              <Union SizeInBit="80">
+                <Memory CodeSegment="%MID%" Offset="387" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%031" Name="CH%C%MuellHnr" ParameterType="%AID%_PT-WCLMuellHnr" Offset="0" BitOffset="0" Text="Hausnummer" Value="" />
+              </Union>
+
+              <!-- müll.io: PLZ (Byte 397-401, 5 Zeichen) -->
+              <Union SizeInBit="40">
+                <Memory CodeSegment="%MID%" Offset="397" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%032" Name="CH%C%MuellZip" ParameterType="%AID%_PT-WCLMuellZip" Offset="0" BitOffset="0" Text="PLZ" Value="" />
+              </Union>
+
+              <!-- müll.io: Ort (Byte 402-431, 30 Zeichen) -->
+              <Union SizeInBit="240">
+                <Memory CodeSegment="%MID%" Offset="402" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%033" Name="CH%C%MuellCity" ParameterType="%AID%_PT-WCLMuellCity" Offset="0" BitOffset="0" Text="Ort" Value="" />
+              </Union>
+
+              <!-- Abfallart 1 Suchbegriff (Byte 432-451, 20 Zeichen) -->
+              <Union SizeInBit="160">
+                <Memory CodeSegment="%MID%" Offset="432" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%010" Name="CH%C%Fr1Keyword" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Suchbegriff Abfallart 1" Value="" />
               </Union>
 
-              <!-- Abfallart 2 Suchbegriff (Byte 180-199, 20 Zeichen) -->
+              <!-- Abfallart 2 Suchbegriff (Byte 452-471, 20 Zeichen) -->
               <Union SizeInBit="160">
-                <Memory CodeSegment="%MID%" Offset="180" BitOffset="0" />
+                <Memory CodeSegment="%MID%" Offset="452" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%011" Name="CH%C%Fr2Keyword" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Suchbegriff Abfallart 2" Value="" />
               </Union>
 
-              <!-- Abfallart 3 Suchbegriff (Byte 200-219, 20 Zeichen) -->
+              <!-- Abfallart 3 Suchbegriff (Byte 472-491, 20 Zeichen) -->
               <Union SizeInBit="160">
-                <Memory CodeSegment="%MID%" Offset="200" BitOffset="0" />
+                <Memory CodeSegment="%MID%" Offset="472" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%012" Name="CH%C%Fr3Keyword" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Suchbegriff Abfallart 3" Value="" />
               </Union>
 
-              <!-- Abfallart 4 Suchbegriff (Byte 220-239, 20 Zeichen) -->
+              <!-- Abfallart 4 Suchbegriff (Byte 492-511, 20 Zeichen) -->
               <Union SizeInBit="160">
-                <Memory CodeSegment="%MID%" Offset="220" BitOffset="0" />
+                <Memory CodeSegment="%MID%" Offset="492" BitOffset="0" />
                 <Parameter Id="%AID%_UP-%TT%%CC%013" Name="CH%C%Fr4Keyword" ParameterType="%AID%_PT-WCLFractionKeyword" Offset="0" BitOffset="0" Text="Suchbegriff Abfallart 4" Value="" />
               </Union>
+
+              <!-- müll.io: Abfallart-Auswahl 1-4 (Byte 512-515, je 1 Byte) -->
+              <Union SizeInBit="8">
+                <Memory CodeSegment="%MID%" Offset="512" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%040" Name="CH%C%MuellFr1" ParameterType="%AID%_PT-WCLMuellFraction" Offset="0" BitOffset="0" Text="Abfallart 1" Value="0" />
+              </Union>
+              <Union SizeInBit="8">
+                <Memory CodeSegment="%MID%" Offset="513" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%041" Name="CH%C%MuellFr2" ParameterType="%AID%_PT-WCLMuellFraction" Offset="0" BitOffset="0" Text="Abfallart 2" Value="0" />
+              </Union>
+              <Union SizeInBit="8">
+                <Memory CodeSegment="%MID%" Offset="514" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%042" Name="CH%C%MuellFr3" ParameterType="%AID%_PT-WCLMuellFraction" Offset="0" BitOffset="0" Text="Abfallart 3" Value="0" />
+              </Union>
+              <Union SizeInBit="8">
+                <Memory CodeSegment="%MID%" Offset="515" BitOffset="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%043" Name="CH%C%MuellFr4" ParameterType="%AID%_PT-WCLMuellFraction" Offset="0" BitOffset="0" Text="Abfallart 4" Value="0" />
+              </Union>
+
             </Parameters>
             <ParameterRefs>
               <ParameterRef Id="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001"  RefId="%AID%_P-%TT%%CC%000" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" RefId="%AID%_UP-%TT%%CC%002" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" RefId="%AID%_UP-%TT%%CC%001" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%020_R-%TT%%CC%02001" RefId="%AID%_UP-%TT%%CC%020" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%021_R-%TT%%CC%02101" RefId="%AID%_UP-%TT%%CC%021" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%022_R-%TT%%CC%02201" RefId="%AID%_UP-%TT%%CC%022" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%023_R-%TT%%CC%02301" RefId="%AID%_UP-%TT%%CC%023" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601" RefId="%AID%_UP-%TT%%CC%026" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%024_R-%TT%%CC%02401" RefId="%AID%_UP-%TT%%CC%024" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%025_R-%TT%%CC%02501" RefId="%AID%_UP-%TT%%CC%025" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%030_R-%TT%%CC%03001" RefId="%AID%_UP-%TT%%CC%030" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101" RefId="%AID%_UP-%TT%%CC%031" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201" RefId="%AID%_UP-%TT%%CC%032" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301" RefId="%AID%_UP-%TT%%CC%033" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" RefId="%AID%_UP-%TT%%CC%010" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" RefId="%AID%_UP-%TT%%CC%011" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201" RefId="%AID%_UP-%TT%%CC%012" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" RefId="%AID%_UP-%TT%%CC%013" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%040_R-%TT%%CC%04001" RefId="%AID%_UP-%TT%%CC%040" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101" RefId="%AID%_UP-%TT%%CC%041" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%042_R-%TT%%CC%04201" RefId="%AID%_UP-%TT%%CC%042" />
+              <ParameterRef Id="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301" RefId="%AID%_UP-%TT%%CC%043" />
             </ParameterRefs>
             <ComObjectTable>
               <!-- ===== Abfallart 1 ===== -->
               <!-- Tage bis Abholung Fraktion 1 (DPT 5.010) -->
-              <ComObject Id="%AID%_O-%TT%%CC%000" Number="%K0%"  Name="CH%C%Fr1DaysUntilPickup" Text="Abfallart 1: Tage bis Abholung" ObjectSize="1 Byte"  DatapointType="DPT-7"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%000" Number="%K0%"  Name="CH%C%Fr1DaysUntilPickup" Text="Abfallart 1: Tage bis Abholung" ObjectSize="1 Byte"  DatapointType="DPST-5-10"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <!-- Bezeichnung Fraktion 1 (DPT 16.001, 14-Byte String) -->
               <ComObject Id="%AID%_O-%TT%%CC%001" Number="%K1%"  Name="CH%C%Fr1Name"            Text="Abfallart 1: Bezeichnung"     ObjectSize="14 Bytes" DatapointType="DPT-16" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <!-- Abholung heute Fraktion 1 (DPT 1.001) -->
@@ -61,19 +168,19 @@
               <ComObject Id="%AID%_O-%TT%%CC%003" Number="%K3%"  Name="CH%C%Fr1PickupTomorrow"  Text="Abfallart 1: Abholung morgen"  ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
               <!-- ===== Abfallart 2 ===== -->
-              <ComObject Id="%AID%_O-%TT%%CC%004" Number="%K4%"  Name="CH%C%Fr2DaysUntilPickup" Text="Abfallart 2: Tage bis Abholung" ObjectSize="1 Byte"  DatapointType="DPT-7"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%004" Number="%K4%"  Name="CH%C%Fr2DaysUntilPickup" Text="Abfallart 2: Tage bis Abholung" ObjectSize="1 Byte"  DatapointType="DPST-5-10"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <ComObject Id="%AID%_O-%TT%%CC%005" Number="%K5%"  Name="CH%C%Fr2Name"            Text="Abfallart 2: Bezeichnung"     ObjectSize="14 Bytes" DatapointType="DPT-16" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <ComObject Id="%AID%_O-%TT%%CC%006" Number="%K6%"  Name="CH%C%Fr2PickupToday"     Text="Abfallart 2: Abholung heute"   ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <ComObject Id="%AID%_O-%TT%%CC%007" Number="%K7%"  Name="CH%C%Fr2PickupTomorrow"  Text="Abfallart 2: Abholung morgen"  ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
               <!-- ===== Abfallart 3 ===== -->
-              <ComObject Id="%AID%_O-%TT%%CC%008" Number="%K8%"  Name="CH%C%Fr3DaysUntilPickup" Text="Abfallart 3: Tage bis Abholung" ObjectSize="1 Byte"  DatapointType="DPT-7"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%008" Number="%K8%"  Name="CH%C%Fr3DaysUntilPickup" Text="Abfallart 3: Tage bis Abholung" ObjectSize="1 Byte"  DatapointType="DPST-5-10"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <ComObject Id="%AID%_O-%TT%%CC%009" Number="%K9%"  Name="CH%C%Fr3Name"            Text="Abfallart 3: Bezeichnung"     ObjectSize="14 Bytes" DatapointType="DPT-16" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <ComObject Id="%AID%_O-%TT%%CC%010" Number="%K10%" Name="CH%C%Fr3PickupToday"     Text="Abfallart 3: Abholung heute"   ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <ComObject Id="%AID%_O-%TT%%CC%011" Number="%K11%" Name="CH%C%Fr3PickupTomorrow"  Text="Abfallart 3: Abholung morgen"  ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
 
               <!-- ===== Abfallart 4 ===== -->
-              <ComObject Id="%AID%_O-%TT%%CC%012" Number="%K12%" Name="CH%C%Fr4DaysUntilPickup" Text="Abfallart 4: Tage bis Abholung" ObjectSize="1 Byte"  DatapointType="DPT-7"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+              <ComObject Id="%AID%_O-%TT%%CC%012" Number="%K12%" Name="CH%C%Fr4DaysUntilPickup" Text="Abfallart 4: Tage bis Abholung" ObjectSize="1 Byte"  DatapointType="DPST-5-10"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <ComObject Id="%AID%_O-%TT%%CC%013" Number="%K13%" Name="CH%C%Fr4Name"            Text="Abfallart 4: Bezeichnung"     ObjectSize="14 Bytes" DatapointType="DPT-16" FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <ComObject Id="%AID%_O-%TT%%CC%014" Number="%K14%" Name="CH%C%Fr4PickupToday"     Text="Abfallart 4: Abholung heute"   ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
               <ComObject Id="%AID%_O-%TT%%CC%015" Number="%K15%" Name="CH%C%Fr4PickupTomorrow"  Text="Abfallart 4: Abholung morgen"  ObjectSize="1 Bit"    DatapointType="DPT-1"  FunctionText="" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
@@ -107,16 +214,69 @@
                     <!-- Kanalname -->
                     <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
-                    <ParameterSeparator Id="%AID%_PS-nnn" Text="ICS-Kalender" UIHint="Headline" />
-                    <!-- ICS-URL -->
-                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" />
+
+                    <!-- Modus-Auswahl -->
+                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Datenquelle" UIHint="Headline" />
+                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" />
+
+                    <!-- ICS-URL (Modus 0) -->
+                    <choose ParamRefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201">
+                      <when test="=0">
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="ICS-Kalender URL" UIHint="Headline" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" />
+                      </when>
+
+                      <!-- app.abfallplus.de (Modus 1) -->
+                      <when test="=1">
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="app.abfallplus.de Einstellungen" UIHint="Headline" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%020_R-%TT%%CC%02001" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%021_R-%TT%%CC%02101" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%025_R-%TT%%CC%02501" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%024_R-%TT%%CC%02401" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%022_R-%TT%%CC%02201" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%023_R-%TT%%CC%02301" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%026_R-%TT%%CC%02601" />
+                      </when>
+
+                      <!-- müll.io (Modus 2) -->
+                      <when test="=2">
+                        <ParameterSeparator Id="%AID%_PS-nnn" Text="müll.io Einstellungen" UIHint="Headline" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%030_R-%TT%%CC%03001" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%032_R-%TT%%CC%03201" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%033_R-%TT%%CC%03301" />
+                      </when>
+                    </choose>
+
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Abfallarten" UIHint="Headline" />
-                    <!-- Suchbegriffe Abfallart 1-4 -->
-                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" />
-                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" />
-                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201" />
-                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" />
+                    <!-- Modus 0: Freitext-Suchbegriffe -->
+                    <choose ParamRefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201">
+                      <when test="=0">
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" />
+                      </when>
+                    </choose>
+                    <!-- Modus 1: app.abfallplus.de Keyword-Suchbegriffe (selbe Felder wie Modus 0) -->
+                    <choose ParamRefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201">
+                      <when test="=1">
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%013_R-%TT%%CC%01301" />
+                      </when>
+                    </choose>
+                    <!-- Modus 2: müll.io Dropdown-Auswahl -->
+                    <choose ParamRefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201">
+                      <when test="=2">
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%040_R-%TT%%CC%04001" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%042_R-%TT%%CC%04201" />
+                        <ParameterRefRef RefId="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301" />
+                      </when>
+                    </choose>
                     <!-- KOs -->
                     <ComObjectRefRef RefId="%AID%_O-%TT%%CC%000_R-%TT%%CC%00001" />
                     <ComObjectRefRef RefId="%AID%_O-%TT%%CC%001_R-%TT%%CC%00101" />

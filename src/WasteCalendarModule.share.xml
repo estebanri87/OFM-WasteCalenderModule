@@ -11,16 +11,73 @@
 							<ParameterType Id="%AID%_PT-WCLNumChannels" Name="WCLNumChannels">
 								<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="%N%" />
 							</ParameterType>
+					<!-- Modus: 0=ICS-URL, 1=app.abfallplus.de (AVR), 2=muell.io -->
+					<ParameterType Id="%AID%_PT-WCLMode" Name="WCLMode">
+						<TypeRestriction Base="Value" SizeInBit="8">
+							<Enumeration Text="ICS-URL" Value="0" Id="%AID%_PT-WCLMode_EN-0" />
+							<Enumeration Text="Apps by Abfall+" Value="1" Id="%AID%_PT-WCLMode_EN-1" />
+								<Enumeration Text="müll.io" Value="2" Id="%AID%_PT-WCLMode_EN-2" />
+							</TypeRestriction>
+						</ParameterType>
 						<!-- ICS-URL bis 160 Zeichen -->
 						<ParameterType Id="%AID%_PT-WCLIcsUrl" Name="WCLIcsUrl">
 							<TypeText SizeInBit="1280" Pattern="^$|^https?://.+" />
 							<!-- 160 characters -->
-							</ParameterType>
-							<!-- Suchbegriff pro Fraktion, bis 20 Zeichen -->
-							<ParameterType Id="%AID%_PT-WCLFractionKeyword" Name="WCLFractionKeyword">
-								<TypeText SizeInBit="160" />
-								<!-- 20 characters -->
-							</ParameterType>
+						</ParameterType>
+						<!-- abfall.io: Key/Modus (32 Hex-Zeichen) -->
+						<ParameterType Id="%AID%_PT-WCLAvrKey" Name="WCLAvrKey">
+							<TypeText SizeInBit="256" />
+							<!-- 32 characters -->
+						</ParameterType>
+						<!-- abfall.io: Numerische ID (kommune, strasse, hnr) bis 10 Zeichen -->
+						<ParameterType Id="%AID%_PT-WCLAvrId" Name="WCLAvrId">
+							<TypeText SizeInBit="80" />
+							<!-- 10 characters -->
+						</ParameterType>
+						<!-- abfall.io: Abfalltyp-IDs, Semikolon-getrennt, bis 40 Zeichen -->
+						<ParameterType Id="%AID%_PT-WCLAvrTypes" Name="WCLAvrTypes">
+							<TypeText SizeInBit="320" />
+							<!-- 40 characters -->
+						</ParameterType>
+						<!-- müll.io: Straße bis 40 Zeichen -->
+						<ParameterType Id="%AID%_PT-WCLMuellStreet" Name="WCLMuellStreet">
+							<TypeText SizeInBit="320" />
+							<!-- 40 characters -->
+						</ParameterType>
+						<!-- müll.io: Hausnummer bis 10 Zeichen -->
+						<ParameterType Id="%AID%_PT-WCLMuellHnr" Name="WCLMuellHnr">
+							<TypeText SizeInBit="80" />
+							<!-- 10 characters -->
+						</ParameterType>
+						<!-- müll.io: PLZ, 5 Zeichen -->
+						<ParameterType Id="%AID%_PT-WCLMuellZip" Name="WCLMuellZip">
+							<TypeText SizeInBit="40" />
+							<!-- 5 characters -->
+						</ParameterType>
+						<!-- müll.io: Ort bis 30 Zeichen -->
+						<ParameterType Id="%AID%_PT-WCLMuellCity" Name="WCLMuellCity">
+							<TypeText SizeInBit="240" />
+							<!-- 30 characters -->
+						</ParameterType>
+						<!-- Suchbegriff pro Fraktion, bis 20 Zeichen -->
+						<ParameterType Id="%AID%_PT-WCLFractionKeyword" Name="WCLFractionKeyword">
+							<TypeText SizeInBit="160" />
+							<!-- 20 characters -->
+						</ParameterType>
+						<!-- müll.io: Abfallart-Auswahl -->
+						<ParameterType Id="%AID%_PT-WCLMuellFraction" Name="WCLMuellFraction">
+							<TypeRestriction Base="Value" SizeInBit="8">
+								<Enumeration Text="(deaktiviert)" Value="0" Id="%AID%_PT-WCLMuellFraction_EN-0" />
+								<Enumeration Text="Restmüll" Value="1" Id="%AID%_PT-WCLMuellFraction_EN-1" />
+								<Enumeration Text="Biomüll" Value="2" Id="%AID%_PT-WCLMuellFraction_EN-2" />
+								<Enumeration Text="Papier" Value="3" Id="%AID%_PT-WCLMuellFraction_EN-3" />
+								<Enumeration Text="Wertstoffe" Value="4" Id="%AID%_PT-WCLMuellFraction_EN-4" />
+								<Enumeration Text="Schadstoffe" Value="5" Id="%AID%_PT-WCLMuellFraction_EN-5" />
+								<Enumeration Text="Heckenschnitt" Value="6" Id="%AID%_PT-WCLMuellFraction_EN-6" />
+								<Enumeration Text="Windeln" Value="7" Id="%AID%_PT-WCLMuellFraction_EN-7" />
+								<Enumeration Text="Weihnachtsbaum" Value="8" Id="%AID%_PT-WCLMuellFraction_EN-8" />
+							</TypeRestriction>
+						</ParameterType>
 						</ParameterTypes>
 					<Parameters>
 						<Union SizeInBit="8">
@@ -31,6 +88,13 @@
 					<ParameterRefs>
 						<ParameterRef Id="%AID%_UP-%TT%00000_R-%TT%0000001" RefId="%AID%_UP-%TT%00000" />
 					</ParameterRefs>
+					<ComObjectTable>
+						<!-- Mülldaten aktualisieren (Eingang, Auslöser) -->
+						<ComObject Id="%AID%_O-%TT%00001" Name="RefreshData" Text="Mülldaten aktualisieren" Number="0" FunctionText="Müllkalender: Eingang, Auslöser" ObjectSize="1 Bit" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" />
+					</ComObjectTable>
+					<ComObjectRefs>
+						<ComObjectRef Id="%AID%_O-%TT%00001_R-%TT%0000101" RefId="%AID%_O-%TT%00001" Name="RefreshData" Priority="Low" ObjectSize="1 Bit" DatapointType="DPST-1-17" />
+					</ComObjectRefs>
 					</Static>
 					<Dynamic>
 						<Channel Name="MainChannel%TT%" Text="Müllkalender" Number="%PREFIX%" Id="%AID%_CH-%TT%" Icon="trash-can-outline">
@@ -40,6 +104,8 @@
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 								<ParameterSeparator Id="%AID%_PS-nnn" Text="Kanalauswahl" UIHint="Headline" />
 								<ParameterRefRef IndentLevel="1" RefId="%AID%_UP-%TT%00000_R-%TT%0000001" />
+								<ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
+								<ComObjectRefRef RefId="%AID%_O-%TT%00001_R-%TT%0000101" />
 							</ParameterBlock>
 							<op:include href="WasteCalendarModule.templ.xml" xpath="//Dynamic/ChannelIndependentBlock/*" type="template" prefix="WCL" IsInner="true" />
 							<!-- More page: shown when fewer channels are selected than max -->
