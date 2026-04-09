@@ -5,6 +5,10 @@
 #include <miniz.h>
 #endif
 
+// Forward declarations
+static std::string latin1ToUtf8(const std::string& s);
+static void utf8ToLatin1(const char* src, char* dst, size_t dstSize);
+
 WasteCalendarChannel::WasteCalendarChannel(uint8_t channelIndex)
     : _channelIndex(channelIndex)
 {
@@ -328,8 +332,7 @@ void WasteCalendarChannel::evaluateFractions(const WastePickupDate* dates, const
             _fractions[f].pickupTomorrow = (bestDays == 1);
 
             // Name: SUMMARY kürzen auf 14 Zeichen
-            strncpy(_fractions[f].name, summaries[bestEvent], 14);
-            _fractions[f].name[14] = '\0';
+            utf8ToLatin1(summaries[bestEvent], _fractions[f].name, 15);
         }
     }
 }
@@ -358,8 +361,7 @@ void WasteCalendarChannel::publishKos()
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Latin-1 → UTF-8 (forward declaration, Definition weiter unten)
-static std::string latin1ToUtf8(const std::string& s);
+// Latin-1/UTF-8 conversion helpers (implementations further below)
 
 // Hilfsfunktionen für fetchAndParseAbfallPlus
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1140,8 +1142,7 @@ bool WasteCalendarChannel::fetchAndParseAbfallPlus() {
                                         _fractions[f].daysUntilPickup = (uint8_t)(diffDays > 254 ? 254 : diffDays);
                                         _fractions[f].pickupToday    = (diffDays == 0);
                                         _fractions[f].pickupTomorrow = (diffDays == 1);
-                                        strncpy(_fractions[f].name, frMatchedNames[f], 14);
-                                        _fractions[f].name[14] = '\0';
+                                        utf8ToLatin1(frMatchedNames[f], _fractions[f].name, 15);
                                     }
                                 }
                             }
@@ -1182,6 +1183,35 @@ static std::string latin1ToUtf8(const std::string& s)
         }
     }
     return out;
+}
+
+// Convert UTF-8 encoded string to Latin-1 (ISO 8859-1), writing at most dstSize-1 chars.
+// Characters outside Latin-1 (U+0100+) are replaced with '?'.
+static void utf8ToLatin1(const char* src, char* dst, size_t dstSize)
+{
+    size_t di = 0;
+    const uint8_t* s = (const uint8_t*)src;
+    while (*s && di < dstSize - 1)
+    {
+        if ((*s & 0x80) == 0)
+        {
+            dst[di++] = (char)*s++;
+        }
+        else if ((*s & 0xE0) == 0xC0 && (*(s+1) & 0xC0) == 0x80)
+        {
+            uint32_t cp = (uint32_t)((*s & 0x1F) << 6) | (*(s+1) & 0x3F);
+            s += 2;
+            dst[di++] = (cp <= 0xFF) ? (char)(uint8_t)cp : '?';
+        }
+        else if ((*s & 0xF0) == 0xE0)
+        {
+            s += (*(s+1) & 0xC0) == 0x80 ? ((*(s+2) & 0xC0) == 0x80 ? 3 : 2) : 1;
+            dst[di++] = '?';
+        }
+        else if ((*s & 0xF8) == 0xF0) { s += 4; dst[di++] = '?'; }
+        else { s++; dst[di++] = '?'; }
+    }
+    dst[di] = '\0';
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
