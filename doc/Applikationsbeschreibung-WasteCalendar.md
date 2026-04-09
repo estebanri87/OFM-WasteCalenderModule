@@ -9,6 +9,30 @@ Automatisierungslogik (z. B. Erinnerungsbenachrichtigung am Vorabend) ist Aufgab
 
 ---
 
+## Inhaltsverzeichnis
+
+- [Voraussetzungen](#voraussetzungen)
+- [Datenquellen (Modus-Auswahl)](#datenquellen-modus-auswahl)
+- [Modus 0: ICS-URL](#modus-0-ics-url)
+  - [ICS-URL](#ics-url)
+  - [Suchbegriff Abfallart 1–4](#suchbegriff-abfallart-14)
+- [Modus 1: Apps by Abfall+](#modus-1-apps-by-abfall)
+  - [App-ID](#app-id)
+  - [Stadt/Gemeinde](#stadtgemeinde)
+  - [Straße](#straße)
+  - [Hausnummer](#hausnummer)
+  - [Landkreis](#landkreis-opt)
+  - [Bezirk](#bezirk-opt)
+  - [Bundesland](#bundesland-opt)
+  - [Abfallart 1–4 (Dropdown)](#abfallart-14-dropdown)
+  - [Unterstützte App-IDs](#unterstützte-app-ids)
+- [Modus 2: müll.io](#modus-2-müllio)
+  - [Straße, Hausnummer, PLZ, Ort](#straße-hausnummer-plz-ort)
+- [Aktualisierung](#aktualisierung)
+- [Gruppenobjekte](#gruppenobjekte)
+
+---
+
 # Voraussetzungen
 
 - Aktive Internetverbindung des Geräts
@@ -30,7 +54,7 @@ Pro Kanal kann eine von drei Datenquellen gewählt werden:
 
 # Modus 0: ICS-URL
 
-<!-- DOC -->
+<!-- DOC HelpContext="ICS-URL" -->
 ## ICS-URL
 
 URL des iCal-Kalenders des Abfallentsorgers.  
@@ -41,7 +65,7 @@ Beispiel: `https://www.meinentsorger.de/abfallkalender/2026.ics`
 
 <!-- DOCEND -->
 
-<!-- DOC -->
+<!-- DOC HelpContext="Suchbegriff-Abfallart" -->
 ## Suchbegriff Abfallart 1–4
 
 Schlüsselwort, das im SUMMARY-Feld der iCal-Einträge gesucht wird.  
@@ -68,7 +92,7 @@ Bleibt das Feld leer, ist die Abfallart deaktiviert.
 Dieser Modus nutzt die [Abfall+ App-Plattform](https://www.abfallplus.de/) direkt über die API unter `app.abfallplus.de`.  
 Es werden über 100 Entsorgungsregionen in Deutschland unterstützt (siehe Liste unten).
 
-<!-- DOC -->
+<!-- DOC HelpContext="App-ID" -->
 ## App-ID
 
 Die eindeutige App-ID des zuständigen Entsorgers. Entspricht der Android-Paket-ID der jeweiligen App.  
@@ -80,7 +104,7 @@ Die App-ID findet sich im Play Store: `https://play.google.com/store/apps/detail
 
 <!-- DOCEND -->
 
-<!-- DOC -->
+<!-- DOC HelpContext="Stadt-Gemeinde" -->
 ## Stadt/Gemeinde
 
 Name der Stadt oder Gemeinde, wie in der Abfall+-App angezeigt.  
@@ -90,7 +114,7 @@ Beispiel: `Neckargemünd`
 
 <!-- DOCEND -->
 
-<!-- DOC -->
+<!-- DOC HelpContext="Strasse" -->
 ## Straße
 
 Name der Straße, wie in der Abfall+-App angezeigt.  
@@ -100,7 +124,7 @@ Beispiel: `Kohlackerweg`
 
 <!-- DOCEND -->
 
-<!-- DOC -->
+<!-- DOC HelpContext="Hausnummer" -->
 ## Hausnummer
 
 Hausnummer (optional). Wenn leer, werden alle Hausnummern der Straße berücksichtigt.  
@@ -110,7 +134,7 @@ Beispiel: `2`
 
 <!-- DOCEND -->
 
-<!-- DOC -->
+<!-- DOC HelpContext="Landkreis" -->
 ## Landkreis (opt.)
 
 Nur bei Apps, die mehrere Landkreise unterstützen (z. B. `de.albagroup.app`, `de.abfallwecker`).  
@@ -121,7 +145,7 @@ Beispiel: `Rhein-Neckar` oder `Tübingen`
 
 <!-- DOCEND -->
 
-<!-- DOC -->
+<!-- DOC HelpContext="Bezirk" -->
 ## Bezirk (opt.)
 
 Nur bei Apps mit Bezirksauswahl (z. B. `de.k4systems.leipziglk`, `de.k4systems.lkgoettingen`).  
@@ -131,7 +155,7 @@ Beispiel: `Brandis`
 
 <!-- DOCEND -->
 
-<!-- DOC -->
+<!-- DOC HelpContext="Bundesland" -->
 ## Bundesland (opt.)
 
 Nur bei Apps, die in mehreren Bundesländern aktiv sind (z. B. `de.abfallwecker`, `de.k4systems.unterallgaeu`).  
@@ -142,7 +166,7 @@ Beispiel: `Baden-Württemberg`
 
 <!-- DOCEND -->
 
-<!-- DOC -->
+<!-- DOC HelpContext="Abfallart-Dropdown" -->
 ## Abfallart 1–4 (Dropdown)
 
 Auswahl der gewünschten Abfallart aus einer vordefinierten Liste.  
@@ -292,7 +316,7 @@ Bezirk:         Brandis
 
 # Modus 2: müll.io
 
-<!-- DOC -->
+<!-- DOC HelpContext="Strasse-Hausnummer-PLZ-Ort" -->
 ## Straße, Hausnummer, PLZ, Ort
 
 Adresse für die Abfallabholung über den müll.io-Dienst.
