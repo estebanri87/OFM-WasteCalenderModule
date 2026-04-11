@@ -120,7 +120,7 @@ Beispiel: `Neckargemünd`
 Name der Straße, wie in der Abfall+-App angezeigt.  
 Maximale Länge: 40 Zeichen.
 
-Beispiel: `Kohlackerweg`
+Beispiel: `Bahnhofstraße`
 
 <!-- DOCEND -->
 
@@ -171,6 +171,15 @@ Beispiel: `Baden-Württemberg`
 
 Auswahl der gewünschten Abfallart aus einer vordefinierten Liste.  
 **Hinweis:** Die Dropdown-Optionen (Restmüll, BioEnergieTonne usw.) sind spezifisch für den Rhein-Neckar-Kreis (AVR, `de.ucom.abfallavr`). Für alle anderen App-IDs werden die Abfallarten automatisch ermittelt – die Auswahl hat dann keine Wirkung und alle Termine werden gemeldet.
+
+<!-- DOCEND -->
+
+<!-- DOC HelpContext="Abrufzeitpunkt" -->
+## Abrufzeitpunkt (Stunde, 0–23)
+
+Legt die Stunde (0–23 Uhr) fest, zu der die Mülldaten täglich neu abgerufen werden. Standardwert ist 2 (02:00 Uhr).
+
+Auf RP2040 blockiert der Datenabruf ca. 20s die KNX-Kommunikation des Geräts. Für RP2040 empfehlen wir Nachtstunden (z.B. 02:00 Uhr).
 
 <!-- DOCEND -->
 
@@ -290,8 +299,8 @@ Auswahl der gewünschten Abfallart aus einer vordefinierten Liste.
 ```yaml
 App-ID:        de.ucom.abfallavr
 Stadt/Gemeinde: Neckargemünd
-Straße:        Kohlackerweg
-Hausnummer:    2
+Straße:        Bahnhofstraße
+Hausnummer:    10
 ```
 
 **Mit Landkreis (Multi-Landkreis-App):**

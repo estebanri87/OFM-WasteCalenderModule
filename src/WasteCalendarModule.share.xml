@@ -64,6 +64,10 @@
 							<TypeText SizeInBit="160" />
 							<!-- 20 characters -->
 						</ParameterType>
+						<!-- Abrufzeitpunkt: Stunde 0-23 -->
+						<ParameterType Id="%AID%_PT-WCLFetchHour" Name="WCLFetchHour">
+							<TypeNumber SizeInBit="8" Type="unsignedInt" minInclusive="0" maxInclusive="23" />
+						</ParameterType>
 						<!-- müll.io: Abfallart-Auswahl -->
 						<ParameterType Id="%AID%_PT-WCLMuellFraction" Name="WCLMuellFraction">
 							<TypeRestriction Base="Value" SizeInBit="8">
