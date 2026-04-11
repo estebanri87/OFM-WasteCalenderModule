@@ -8,9 +8,6 @@
 // Startup-Verzögerung vor dem ersten Abruf
 #define WCL_STARTUP_DELAY_MS (60UL * 1000UL)
 
-// Uhrzeit (Stunde) ab der täglich neu abgerufen wird
-#define WCL_REFRESH_HOUR 2
-
 // Maximale Anzahl Events im ICS-Puffer
 #define WCL_MAX_EVENTS 200
 
@@ -45,6 +42,13 @@ class WasteCalendarChannel : public OpenKNX::Channel
     uint32_t _lastFetch = 0;
     int _lastFetchDay = -1; // Tag des letzten Abrufs (tm_yday), -1 = noch nie
     bool _firstFetch = true;
+
+#ifdef ARDUINO_ARCH_ESP32
+    enum WclFetchState { WCL_FETCH_IDLE, WCL_FETCH_RUNNING, WCL_FETCH_DONE };
+    volatile WclFetchState _fetchState = WCL_FETCH_IDLE;
+    TaskHandle_t _fetchTaskHandle = nullptr;
+    static void fetchTaskEntry(void* param);
+#endif
 
     WasteFractionState _fractions[WCL_NUM_FRACTIONS];
 

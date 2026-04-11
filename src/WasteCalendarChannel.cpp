@@ -14,6 +14,17 @@ WasteCalendarChannel::WasteCalendarChannel(uint8_t channelIndex)
 {
 }
 
+#ifdef ARDUINO_ARCH_ESP32
+void WasteCalendarChannel::fetchTaskEntry(void* param)
+{
+    WasteCalendarChannel* self = static_cast<WasteCalendarChannel*>(param);
+    self->fetchAndParse();
+    self->_fetchState = WCL_FETCH_DONE;
+    self->_fetchTaskHandle = nullptr;
+    vTaskDelete(nullptr);
+}
+#endif
+
 const std::string WasteCalendarChannel::name()
 {
     return "WasteCalendar";
@@ -30,6 +41,17 @@ void WasteCalendarChannel::loop()
     if (now < 1577836800LL)
         return;
 
+#ifdef ARDUINO_ARCH_ESP32
+    if (_fetchState == WCL_FETCH_DONE)
+    {
+        _fetchState = WCL_FETCH_IDLE;
+        _lastFetchDay = localtime(&now)->tm_yday;
+        return;
+    }
+    if (_fetchState == WCL_FETCH_RUNNING)
+        return;
+#endif
+
     if (_firstFetch)
     {
         if (millis() < WCL_STARTUP_DELAY_MS)
@@ -38,16 +60,28 @@ void WasteCalendarChannel::loop()
     }
     else
     {
-        // Täglicher Abruf ab WCL_REFRESH_HOUR Uhr, maximal einmal pro Kalendertag
+        // Täglicher Abruf ab konfigurierter Stunde, maximal einmal pro Kalendertag
+        uint8_t fetchHour = ParamWCL_CHFetchHour;
         struct tm* tm = localtime(&now);
-        if (tm->tm_hour < WCL_REFRESH_HOUR)
-            return; // noch nicht WCL_REFRESH_HOUR Uhr
+        if (tm->tm_hour < fetchHour)
+            return;
         if (tm->tm_yday == _lastFetchDay)
             return; // heute bereits abgerufen
     }
 
+#ifdef ARDUINO_ARCH_ESP32
+    _fetchState = WCL_FETCH_RUNNING;
+    if (xTaskCreatePinnedToCore(fetchTaskEntry, "WCL_fetch", 16384, this, 1, &_fetchTaskHandle, 0) != pdPASS)
+    {
+        logErrorP("WCL ch%d: Task-Erstellung fehlgeschlagen, führe synchron aus", _channelIndex);
+        _fetchState = WCL_FETCH_IDLE;
+        fetchAndParse();
+        _lastFetchDay = localtime(&now)->tm_yday;
+    }
+#else
     fetchAndParse();
     _lastFetchDay = localtime(&now)->tm_yday;
+#endif
 }
 
 void WasteCalendarChannel::processInputKo(GroupObject& ko)
