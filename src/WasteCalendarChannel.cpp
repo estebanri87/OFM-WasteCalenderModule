@@ -17,10 +17,12 @@ WasteCalendarChannel::WasteCalendarChannel(uint8_t channelIndex)
 #ifdef ARDUINO_ARCH_ESP32
 void WasteCalendarChannel::fetchTaskEntry(void* param)
 {
+    esp_task_wdt_add(nullptr);
     WasteCalendarChannel* self = static_cast<WasteCalendarChannel*>(param);
     self->fetchAndParse();
     self->_fetchState = WCL_FETCH_DONE;
     self->_fetchTaskHandle = nullptr;
+    esp_task_wdt_delete(nullptr);
     vTaskDelete(nullptr);
 }
 #endif
