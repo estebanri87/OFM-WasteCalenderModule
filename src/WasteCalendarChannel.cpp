@@ -683,10 +683,24 @@ static void streamExtractWasteTypesByKeywords(HTTPClient* http,
     }
 }
 
+#ifdef ARDUINO_ARCH_ESP32
+// Temporarily unregisters this FreeRTOS task from the ESP Task WDT for the
+// duration of the abfallplus HTTPS sequence. TLS ECDH on ESP32 soft-crypto
+// can take >16 s (the WDT timeout), so the task must not be monitored during
+// blocking HTTP calls. The destructor re-registers and resets the watchdog.
+namespace { struct AbfallplusWdtSuspend {
+    AbfallplusWdtSuspend()  { esp_task_wdt_delete(nullptr); }
+    ~AbfallplusWdtSuspend() { esp_task_wdt_add(nullptr); esp_task_wdt_reset(); }
+}; }
+#endif
+
 // ─────────────────────────────────────────────────────────────────────────────
 // app.abfallplus.de: 11-Schritt-Wizard → Plist-XML streamen und auswerten
 // ─────────────────────────────────────────────────────────────────────────────
 bool WasteCalendarChannel::fetchAndParseAbfallPlus() {
+#ifdef ARDUINO_ARCH_ESP32
+    AbfallplusWdtSuspend wdtSuspend; // Unregister from WDT for entire HTTPS sequence
+#endif
     // ETS-Parameter lesen
     std::string appId           = ParamWCL_CHAvrKeyStr;
     std::string city            = latin1ToUtf8(ParamWCL_CHAvrModusStr);      // Stadt/Gemeinde
@@ -957,16 +971,10 @@ bool WasteCalendarChannel::fetchAndParseAbfallPlus() {
     // ─── Schritt 9+10: version.xml (Wizard-Abschluss, kurzer Timeout) ─────
     {
         std::string vData = std::string("client=") + clientId + "&app_id=" + appId;
-#ifdef ARDUINO_ARCH_ESP32
-        esp_task_wdt_reset();
-#endif
         HTTPClient* h9 = makeAbfallHttp("https://app.abfallplus.de/version.xml", sessionCookie, false);
         h9->setTimeout(4000); // kurzer Timeout – Antwort wird nicht ausgewertet
         h9->POST(String(vData.c_str())); h9->end(); delete h9;
         delay(100);
-#ifdef ARDUINO_ARCH_ESP32
-        esp_task_wdt_reset();
-#endif
         HTTPClient* h10 = makeAbfallHttp("https://app.abfallplus.de/version.xml?renew=1", sessionCookie, false);
         h10->setTimeout(4000);
         h10->POST(String(vData.c_str())); h10->end(); delete h10;
@@ -976,9 +984,6 @@ bool WasteCalendarChannel::fetchAndParseAbfallPlus() {
     // ─── Schritt 11: struktur.xml.zip → ZIP-Dekomprimierung + Plist-XML parsen ─
     {
         std::string vData = std::string("client=") + clientId + "&app_id=" + appId;
-#ifdef ARDUINO_ARCH_ESP32
-        esp_task_wdt_reset();
-#endif
         HTTPClient* http = makeAbfallHttp("https://app.abfallplus.de/struktur.xml.zip", sessionCookie, false);
         int httpCode = http->POST(String(vData.c_str()));
         int zipSize = http->getSize();
@@ -1008,9 +1013,6 @@ bool WasteCalendarChannel::fetchAndParseAbfallPlus() {
             zipSize = zipLen;
         }
         http->end(); delete http;
-#ifdef ARDUINO_ARCH_ESP32
-        esp_task_wdt_reset();
-#endif
         logInfoP("abfallplus ch%d: komprimiert gelesen %d bytes (sig=%02X%02X)", _channelIndex, zipSize, zipBuf[0], zipBuf[1]);
 
         // Deflate-Daten-Offset bestimmen (gzip oder ZIP)
@@ -1087,7 +1089,6 @@ bool WasteCalendarChannel::fetchAndParseAbfallPlus() {
             (mz_uint8*)xmlBuf, (mz_uint8*)xmlBuf, &outBytes,
             TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF);
         free(decomp);
-        esp_task_wdt_reset();
         size_t xmlLen = outBytes;
         free(zipBuf);
         if (tst != TINFL_STATUS_DONE) {
@@ -1131,11 +1132,7 @@ bool WasteCalendarChannel::fetchAndParseAbfallPlus() {
         const char* xmlPtr = xmlBuf;
         char lineBuf[256];
 
-        int lineCount = 0;
         while (*xmlPtr) {
-#ifdef ARDUINO_ARCH_ESP32
-            if (++lineCount % 500 == 0) esp_task_wdt_reset();
-#endif
             // Nächste Zeile extrahieren
             const char* nl = strchr(xmlPtr, '\n');
             int lineLen = nl ? (int)(nl - xmlPtr) : (int)strlen(xmlPtr);
