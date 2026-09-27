@@ -6,6 +6,7 @@ v0.2.0
 * Change: "Bezeichnung" heißt jetzt durchgängig "Beschreibung"
 * Breaking: Die Datenquelle ist umnummeriert (0=Deaktiviert, 1=ICS-URL, 2=Apps by Abfall+, 3=müll.io). Bestehende Projekte lesen dadurch eine falsche Datenquelle und müssen neu parametriert werden
 * Breaking: Das Speicherlayout verschiebt sich, da der Kanalzähler entfällt
+* Fix: Ein neu angelegter Kanal ist standardmäßig "Deaktiviert" statt "ICS-URL"
 
 v0.1.0
 
