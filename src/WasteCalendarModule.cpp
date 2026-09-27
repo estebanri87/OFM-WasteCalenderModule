@@ -35,6 +35,10 @@ bool WasteCalendarModule::processCommand(const std::string cmd, bool diagnoseKo)
 
 OpenKNX::Channel* WasteCalendarModule::createChannel(uint8_t _channelIndex /* this parameter is used in macros, do not rename */)
 {
+    // Datenquelle 0 = Deaktiviert: keinen Kanal anlegen
+    if (ParamWCL_CHMode == 0)
+        return nullptr;
+
     return new WasteCalendarChannel(_channelIndex);
 }
 

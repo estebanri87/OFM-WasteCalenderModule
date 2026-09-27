@@ -102,10 +102,10 @@ bool WasteCalendarChannel::fetchAndParse()
 {
     uint8_t mode = ParamWCL_CHMode;
 
-    if (mode == 2)
+    if (mode == 3)
         return fetchAndParseMuellIo();
 
-    if (mode == 1)
+    if (mode == 2)
         return fetchAndParseAbfallPlus();
 
     // Heap-Allokation: dates[200]*12B + summaries[200][64] = ~15KB → zu groß für ESP32-Stack (8KB)

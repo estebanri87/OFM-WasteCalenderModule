@@ -1,3 +1,12 @@
+v0.2.0
+
+* Change: Kanalauswahl nach OpenKNX-Standard – eigener Tab "Kanalauswahl" mit einer Zeile je Kanal (Kanal / Datenquelle / Beschreibung)
+* Change: Der Schieberegler "Aktive Kalender" und der Tab "(mehr)" entfallen; ein Kanal wird über "Deaktiviert" bei der Datenquelle abgeschaltet
+* Change: Deaktivierte Kanäle werden nicht mehr angelegt und erscheinen nicht in der Baumansicht; die Beschreibung bleibt trotzdem eingebbar
+* Change: "Bezeichnung" heißt jetzt durchgängig "Beschreibung"
+* Breaking: Die Datenquelle ist umnummeriert (0=Deaktiviert, 1=ICS-URL, 2=Apps by Abfall+, 3=müll.io). Bestehende Projekte lesen dadurch eine falsche Datenquelle und müssen neu parametriert werden
+* Breaking: Das Speicherlayout verschiebt sich, da der Kanalzähler entfällt
+
 v0.1.0
 
 * Feature: Unterstützung für app.abfallplus.de (11-Schritt-Wizard, gzip-Dekomprimierung)

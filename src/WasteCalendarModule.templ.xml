@@ -9,13 +9,16 @@
           <Static>
             <Parameters>
               <!-- Kanal-Bezeichnung -->
-              <Parameter Id="%AID%_P-%TT%%CC%000" Name="Channel%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Bezeichnung" Value="" />
+              <Parameter Id="%AID%_P-%TT%%CC%000" Name="Channel%C%Name" ParameterType="%AID%_PT-Text40Byte" Text="Beschreibung" Value="" />
 
               <!-- Modus (Byte 0, 1 Byte) -->
               <Union SizeInBit="8">
                 <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%002" Name="CH%C%Mode" ParameterType="%AID%_PT-WCLMode" Offset="0" BitOffset="0" Text="Datenquelle" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%002" Name="CH%C%Mode" ParameterType="%AID%_PT-WCLMode" Offset="0" BitOffset="0" Text="Datenquelle" Value="1" />
               </Union>
+
+              <!-- TypeSelect: kein Union, keine Memory-Referenz -> nur in ETS gespeichert, nicht auf dem Geraet -->
+              <Parameter Id="%AID%_P-%TT%%CC%997" Name="Ch%C%TypeSelect" ParameterType="%AID%_PT-WCLModeSelect" Text="Datenquelle" Value="1" />
 
               <!-- ICS-URL (Byte 1-160, 160 Zeichen) -->
               <Union SizeInBit="1280">
@@ -162,7 +165,20 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%042_R-%TT%%CC%04201" RefId="%AID%_UP-%TT%%CC%042" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%043_R-%TT%%CC%04301" RefId="%AID%_UP-%TT%%CC%043" />
               <ParameterRef Id="%AID%_UP-%TT%%CC%050_R-%TT%%CC%05001" RefId="%AID%_UP-%TT%%CC%050" />
+              <!-- TypeSelect -->
+              <ParameterRef Id="%AID%_P-%TT%%CC%997_R-%TT%%CC%99701" RefId="%AID%_P-%TT%%CC%997" />
             </ParameterRefs>
+            <ParameterCalculations>
+              <!-- Haelt Haupttyp (Kanalauswahl) und TypeSelect (Kanal-Tab) synchron -->
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%001" Language="JavaScript" Name="SyncType%CC%" RLTransformationFunc="BASE_SyncChannelType" LRTransformationFunc="BASE_SyncChannelType">
+                <LParameters>
+                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%997_R-%TT%%CC%99701" AliasName="TypeValue" />
+                </LParameters>
+                <RParameters>
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" AliasName="TypeValue" />
+                </RParameters>
+              </ParameterCalculation>
+            </ParameterCalculations>
             <ComObjectTable>
               <!-- ===== Abfallart 1 ===== -->
               <!-- Tage bis Abholung Fraktion 1 (DPT 5.010) -->
@@ -213,28 +229,45 @@
           </Static>
           <Dynamic>
             <ChannelIndependentBlock>
-              <!-- Kanalanzahl steuert Sichtbarkeit der Kanalseiten -->
-              <choose ParamRefId="%AID%_UP-%TT%00000_R-%TT%0000001">
-                <when test="&gt;=%C%">
-                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%WCL" Text="Kanal %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="trash-can-outline" ShowInComObjectTree="true" HelpContext="WCL-ICS-URL">
-                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Müllkalender Kanal %C%" UIHint="Headline" />
-                    <!-- Kanalname -->
-                    <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" />
-                    <ParameterSeparator Id="%AID%_PS-nnn" Text="" UIHint="HorizontalRuler" />
 
-                    <!-- Modus-Auswahl -->
-                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Datenquelle" UIHint="Headline" />
-                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" />
+              <!-- Eine Zeile der Kanalauswahl-Tabelle: je Kanal eine eigene Grid-Tabelle -->
+              <ParameterBlock Id="%AID%_PB-nnn" Name="Settings">
+                <ParameterBlock Id="%AID%_PB-nnn" Inline="true" Layout="Grid">
+                  <Rows>
+                    <Row Id="%AID%_PB-nnn_R-1" />
+                  </Rows>
+                  <Columns>
+                    <Column Id="%AID%_PB-nnn_C-1" Width="10%" />
+                    <Column Id="%AID%_PB-nnn_C-2" Width="35%" />
+                    <Column Id="%AID%_PB-nnn_C-3" Width="55%" />
+                  </Columns>
+                  <ParameterSeparator Id="%AID%_PS-nnn" Cell="1,1" Text="Kanal %C%" />
+                  <!-- Haupttyp: hier wird aktiviert und deaktiviert -->
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" Cell="1,2" HelpContext="WCL-ICS-URL" />
+                  <!-- Beschreibung bleibt auch bei Deaktiviert sichtbar -->
+                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Cell="1,3" HelpContext="BASE-ChannelName" />
+                </ParameterBlock>
+              </ParameterBlock>
+
+              <ParameterBlock Id="%AID%_PB-nnn" Name="Channel">
+              <choose ParamRefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201">
+                <when test="&gt;0">
+                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%WCL" Text="Kanal %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="trash-can-outline" ShowInComObjectTree="true" HelpContext="WCL-ICS-URL">
+                    <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanaldefinition" UIHint="Headline" />
+                    <!-- Beschreibung -->
+                    <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" HelpContext="BASE-ChannelName" />
+                    <!-- Datenquelle (ohne "Deaktiviert", synchron zur Kanalauswahl) -->
+                    <ParameterRefRef RefId="%AID%_P-%TT%%CC%997_R-%TT%%CC%99701" HelpContext="WCL-ICS-URL" />
 
                     <!-- ICS-URL (Modus 0) -->
                     <choose ParamRefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201">
-                      <when test="=0">
+                      <when test="=1">
                         <ParameterSeparator Id="%AID%_PS-nnn" Text="ICS-Kalender URL" UIHint="Headline" />
                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%001_R-%TT%%CC%00101" HelpContext="WCL-ICS-URL" />
                       </when>
 
                       <!-- app.abfallplus.de (Modus 1) -->
-                      <when test="=1">
+                      <when test="=2">
                         <ParameterSeparator Id="%AID%_PS-nnn" Text="app.abfallplus.de Einstellungen" UIHint="Headline" />
                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%020_R-%TT%%CC%02001" HelpContext="WCL-App-ID" />
                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%021_R-%TT%%CC%02101" HelpContext="WCL-Stadt-Gemeinde" />
@@ -246,7 +279,7 @@
                       </when>
 
                       <!-- müll.io (Modus 2) -->
-                      <when test="=2">
+                      <when test="=3">
                         <ParameterSeparator Id="%AID%_PS-nnn" Text="müll.io Einstellungen" UIHint="Headline" />
                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%030_R-%TT%%CC%03001" HelpContext="WCL-Strasse-Hausnummer-PLZ-Ort" />
                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%031_R-%TT%%CC%03101" HelpContext="WCL-Strasse-Hausnummer-PLZ-Ort" />
@@ -259,7 +292,7 @@
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Abfallarten" UIHint="Headline" />
                     <!-- Modus 0: Freitext-Suchbegriffe -->
                     <choose ParamRefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201">
-                      <when test="=0">
+                      <when test="=1">
                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" HelpContext="WCL-Suchbegriff-Abfallart" />
                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" HelpContext="WCL-Suchbegriff-Abfallart" />
                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201" HelpContext="WCL-Suchbegriff-Abfallart" />
@@ -268,7 +301,7 @@
                     </choose>
                     <!-- Modus 1: app.abfallplus.de Keyword-Suchbegriffe (selbe Felder wie Modus 0) -->
                     <choose ParamRefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201">
-                      <when test="=1">
+                      <when test="=2">
                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%010_R-%TT%%CC%01001" HelpContext="WCL-Suchbegriff-Abfallart" />
                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%011_R-%TT%%CC%01101" HelpContext="WCL-Suchbegriff-Abfallart" />
                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%012_R-%TT%%CC%01201" HelpContext="WCL-Suchbegriff-Abfallart" />
@@ -277,7 +310,7 @@
                     </choose>
                     <!-- Modus 2: müll.io Dropdown-Auswahl -->
                     <choose ParamRefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201">
-                      <when test="=2">
+                      <when test="=3">
                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%040_R-%TT%%CC%04001" HelpContext="WCL-Abfallart-Dropdown" />
                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%041_R-%TT%%CC%04101" HelpContext="WCL-Abfallart-Dropdown" />
                         <ParameterRefRef RefId="%AID%_UP-%TT%%CC%042_R-%TT%%CC%04201" HelpContext="WCL-Abfallart-Dropdown" />
@@ -309,6 +342,8 @@
                   </ParameterBlock>
                 </when>
               </choose>
+              </ParameterBlock>
+
             </ChannelIndependentBlock>
           </Dynamic>
         </ApplicationProgram>
