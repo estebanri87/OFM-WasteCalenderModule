@@ -1,3 +1,10 @@
+v0.3.0
+
+* Feature: Neuer Kanalparameter "Suspendiert" nach OpenKNX-Standard. Damit lässt sich ein Kanal vorübergehend abschalten, ohne ihn zu deaktivieren - die Kommunikationsobjekte und ihre Gruppenadress-Verknüpfungen bleiben erhalten.
+* Feature: Suspendierte Kanäle werden in der Baumansicht mit einem Verbotszeichen vor der Beschreibung gekennzeichnet.
+* Breaking: Der Parameter "Datenquelle" belegt nur noch 4 statt 8 Bit, damit "Suspendiert" ohne Vergrößerung des Kanalblocks daneben passt. Bestehende Projekte müssen den Kanal neu parametrieren.
+
+
 v0.2.0
 
 * Change: Kanalauswahl nach OpenKNX-Standard – eigener Tab "Kanalauswahl" mit einer Zeile je Kanal (Kanal / Datenquelle / Beschreibung)

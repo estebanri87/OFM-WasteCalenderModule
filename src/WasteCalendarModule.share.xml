@@ -9,7 +9,7 @@
 						<ParameterTypes>
 					<!-- Modus: 0=ICS-URL, 1=app.abfallplus.de (AVR), 2=muell.io -->
 					<ParameterType Id="%AID%_PT-WCLMode" Name="WCLMode">
-						<TypeRestriction Base="Value" SizeInBit="8">
+						<TypeRestriction Base="Value" SizeInBit="4">
 							<Enumeration Text="Deaktiviert" Value="0" Id="%AID%_PT-WCLMode_EN-0" />
 							<Enumeration Text="ICS-URL" Value="1" Id="%AID%_PT-WCLMode_EN-1" />
 							<Enumeration Text="Apps by Abfall+" Value="2" Id="%AID%_PT-WCLMode_EN-2" />
@@ -18,7 +18,7 @@
 						</ParameterType>
 					<!-- Kanal-Tab: Typwechsel ohne "Deaktiviert", synchron zur Kanalauswahl -->
 					<ParameterType Id="%AID%_PT-WCLModeSelect" Name="WCLModeSelect">
-						<TypeRestriction Base="Value" SizeInBit="8">
+						<TypeRestriction Base="Value" SizeInBit="4">
 							<Enumeration Text="ICS-URL" Value="1" Id="%AID%_PT-WCLModeSelect_EN-1" />
 							<Enumeration Text="Apps by Abfall+" Value="2" Id="%AID%_PT-WCLModeSelect_EN-2" />
 							<Enumeration Text="müll.io" Value="3" Id="%AID%_PT-WCLModeSelect_EN-3" />

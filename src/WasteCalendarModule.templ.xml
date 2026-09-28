@@ -14,11 +14,16 @@
               <!-- Modus (Byte 0, 1 Byte) -->
               <Union SizeInBit="8">
                 <Memory CodeSegment="%MID%" Offset="0" BitOffset="0" />
-                <Parameter Id="%AID%_UP-%TT%%CC%002" Name="CH%C%Mode" ParameterType="%AID%_PT-WCLMode" Offset="0" BitOffset="0" Text="Datenquelle" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%002" Name="CH%C%Mode"      ParameterType="%AID%_PT-WCLMode"   Offset="0" BitOffset="0" Text="Datenquelle" Value="0" />
+                <Parameter Id="%AID%_UP-%TT%%CC%051" Name="CH%C%Suspended" ParameterType="%AID%_PT-Suspended" Offset="0" BitOffset="4" Text="Suspendiert" Value="0" />
               </Union>
 
               <!-- TypeSelect: kein Union, keine Memory-Referenz -> nur in ETS gespeichert, nicht auf dem Geraet -->
               <Parameter Id="%AID%_P-%TT%%CC%997" Name="Ch%C%TypeSelect" ParameterType="%AID%_PT-WCLModeSelect" Text="Datenquelle" Value="1" />
+
+              <!-- Anzeigename fuer den Kanal-Tab: Beschreibung, der bei "Suspendiert = Ja"
+                   das Zeichen der Kanalauswahl vorangestellt wird. Nur in der ETS. -->
+              <Parameter Id="%AID%_P-%TT%%CC%998" Name="Ch%C%NameDisplay" ParameterType="%AID%_PT-Text45Byte" Text="Beschreibung (Anzeige)" Value="" Access="Read" op:configTransfer="never" />
 
               <!-- ICS-URL (Byte 1-160, 160 Zeichen) -->
               <Union SizeInBit="1280">
@@ -167,6 +172,10 @@
               <ParameterRef Id="%AID%_UP-%TT%%CC%050_R-%TT%%CC%05001" RefId="%AID%_UP-%TT%%CC%050" />
               <!-- TypeSelect -->
               <ParameterRef Id="%AID%_P-%TT%%CC%997_R-%TT%%CC%99701" RefId="%AID%_P-%TT%%CC%997" />
+              <!-- Suspendiert -->
+              <ParameterRef Id="%AID%_UP-%TT%%CC%051_R-%TT%%CC%05101" RefId="%AID%_UP-%TT%%CC%051" />
+              <!-- Anzeigename -->
+              <ParameterRef Id="%AID%_P-%TT%%CC%998_R-%TT%%CC%99801" RefId="%AID%_P-%TT%%CC%998" />
             </ParameterRefs>
             <ParameterCalculations>
               <!-- Haelt Haupttyp (Kanalauswahl) und TypeSelect (Kanal-Tab) synchron -->
@@ -176,6 +185,19 @@
                 </LParameters>
                 <RParameters>
                   <ParameterRefRef RefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201" AliasName="TypeValue" />
+                </RParameters>
+              </ParameterCalculation>
+
+              <!-- Suspendierte Kanaele in der Baumansicht kennzeichnen -->
+              <ParameterCalculation Id="%AID%_PC-%TT%%CC%002" Language="JavaScript" Name="MarkInactive%CC%"
+                                    RLTransformationFunc="BASE_MarkInactiveChannel" RLTransformationParameters="{&quot;InactiveValue&quot;:1}"
+                                    LRTransformationFunc="BASE_Nop">
+                <LParameters>
+                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%998_R-%TT%%CC%99801" AliasName="TextOutput" />
+                </LParameters>
+                <RParameters>
+                  <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" AliasName="TextInput" />
+                  <ParameterRefRef RefId="%AID%_UP-%TT%%CC%051_R-%TT%%CC%05101" AliasName="InactiveControl" />
                 </RParameters>
               </ParameterCalculation>
             </ParameterCalculations>
@@ -252,12 +274,14 @@
               <ParameterBlock Id="%AID%_PB-nnn" Name="Channel">
               <choose ParamRefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201">
                 <when test="&gt;0">
-                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%WCL" Text="Kanal %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" Icon="trash-can-outline" ShowInComObjectTree="true" HelpContext="WCL-ICS-URL">
+                  <ParameterBlock Id="%AID%_PB-nnn" Name="f%CC%WCL" Text="Kanal %C%: {{0: ...}}" TextParameterRefId="%AID%_P-%TT%%CC%998_R-%TT%%CC%99801" Icon="trash-can-outline" ShowInComObjectTree="true" HelpContext="WCL-ICS-URL">
                     <ParameterSeparator Id="%AID%_PS-nnn" Text="Kanaldefinition" UIHint="Headline" />
                     <!-- Beschreibung -->
                     <ParameterRefRef RefId="%AID%_P-%TT%%CC%000_R-%TT%%CC%00001" HelpContext="BASE-ChannelName" />
                     <!-- Datenquelle (ohne "Deaktiviert", synchron zur Kanalauswahl) -->
                     <ParameterRefRef RefId="%AID%_P-%TT%%CC%997_R-%TT%%CC%99701" HelpContext="WCL-ICS-URL" />
+                    <!-- Suspendiert -->
+                    <ParameterRefRef RefId="%AID%_UP-%TT%%CC%051_R-%TT%%CC%05101" HelpContext="BASE-ChannelSuspended" />
 
                     <!-- ICS-URL (Modus 0) -->
                     <choose ParamRefId="%AID%_UP-%TT%%CC%002_R-%TT%%CC%00201">
